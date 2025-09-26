@@ -10,20 +10,20 @@ public class Bebida {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    public Integer id;
 
     @Column(name = "nombre", nullable = false)
-    private String nombre;
+    public String nombre;
 
     @Column(name = "descripcion", nullable = false)
-    private String descripcion;
+    public String descripcion;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idTipoBebida", referencedColumnName = "id")
-    private TipoBebida tipoBebida;
+    @JoinColumn(name = "idtipoBebida", referencedColumnName = "id")
+    public TipoBebida tipoBebida;
 
     @OneToMany(mappedBy = "bebida", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<BebidaIngrediente> ingredientes;
+    public Set<BebidaIngrediente> ingredientes;
 
     // Getters y Setters
     public Integer getId() {
@@ -54,7 +54,7 @@ public class Bebida {
         return tipoBebida;
     }
 
-    public void setTipoBebida(TipoBebida tipoBebida) {
+    public void settipoBebida(TipoBebida tipoBebida) {
         this.tipoBebida = tipoBebida;
     }
 
