@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ingrediente")
+@RequestMapping("/ingrediente") // Nota: la ruta es '/ingrediente'
 public class IngredienteController {
 
     @Autowired
@@ -21,9 +21,10 @@ public class IngredienteController {
     @GetMapping("/buscar")
     public ResponseEntity<List<Ingrediente>> buscarIngredientes(
             @RequestParam(required = false) String nombre,
-            @RequestParam(required = false) Float id) {
+            @RequestParam(required = false) Float costoMin,
+            @RequestParam(required = false) Float costoMax) {
 
-        List<Ingrediente> ingredientes = ingredienteService.buscarIngredientesPorNombre(nombre, id);
+        List<Ingrediente> ingredientes = ingredienteService.buscarIngredientesConFiltros(nombre, costoMin, costoMax);
         return ResponseEntity.ok(ingredientes);
     }
 }

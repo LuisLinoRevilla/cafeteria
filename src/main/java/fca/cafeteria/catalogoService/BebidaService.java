@@ -20,30 +20,44 @@ public class BebidaService {
     @Autowired
     public TipoBebidaRepository tipoBebidaRepository;
 
-    // This method handles the logic for adding a beverage and its type.
+    // Método para agregar una bebida, verificando o creando su tipo.
     public Bebida agregarBebidaConTipo(Bebida bebida, String descripcionTipoBebida) {
+
+        // 1. Buscar si el TipoBebida ya existe.
         Optional<TipoBebida> tipoExistente = tipoBebidaRepository.findByDescripcion(descripcionTipoBebida);
 
         TipoBebida tipoBebida;
 
         if (tipoExistente.isPresent()) {
+            // 2. Si existe, usar el TipoBebida encontrado.
             tipoBebida = tipoExistente.get();
         } else {
+            // 3. Si no existe, crear un nuevo TipoBebida y guardarlo.
             tipoBebida = new TipoBebida();
             tipoBebida.setDescripcion(descripcionTipoBebida);
             tipoBebidaRepository.save(tipoBebida);
         }
 
+        // 4. Asignar el TipoBebida (nuevo o existente) a la Bebida.
         bebida.settipoBebida(tipoBebida);
+
+        // 5. Guardar la Bebida en el repositorio.
         return bebidaRepository.save(bebida);
     }
 
-    // This is the correct method for searching beverages by type.
+
+    // Método para buscar bebidas por tipo.
     public List<Bebida> buscarPorTipoBebida(String descripcionTipoBebida) {
         String tipoLimpio = descripcionTipoBebida.trim();
         if (tipoLimpio.isEmpty()) {
             return Collections.emptyList();
         }
-        return bebidaRepository.findByTipoBebida_DescripcionIgnoreCase(tipoLimpio);
+        return bebidaRepository.findByTipoBebida_DescripcionContainingIgnoreCase(tipoLimpio);
+    }
+
+
+    // Método para obtener todas las bebidas.
+    public List<Bebida> findAll() {
+        return bebidaRepository.findAll();
     }
 }
