@@ -1,44 +1,24 @@
 package fca.cafeteria.clases;
 
+// Asegúrate de tener esta importación
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import java.util.Set;
+import lombok.Data;
 
 @Entity
-@Table(name = "tTipoBebida")
+@Table(name = "ttipobebida")
+@Data
 public class TipoBebida {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "descripcion")
     private String descripcion;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "tipoBebida", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Bebida> bebidas;
-
-    // Getters y Setters
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public Set<Bebida> getBebidas() {
-        return bebidas;
-    }
-
-    public void setBebidas(Set<Bebida> bebidas) {
-        this.bebidas = bebidas;
-    }
 }
